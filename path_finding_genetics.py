@@ -170,7 +170,7 @@ generations = 1000       # population's generations
 mut_1_prob = 0.6         # prob of replacing together two atms in combined path
 mut_2_prob = 0.4      # prob of reversing the sublist in combined path
 mut_3_prob = 0.2      # probability of changing the length of paths for engineers
-two_opt_search = True  # better convergence, lower speed for large quantity of atms
+two_opt_search = False  # better convergence, lower speed for large quantity of atms
 
 
 # seed
