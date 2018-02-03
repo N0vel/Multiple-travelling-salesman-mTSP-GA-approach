@@ -158,23 +158,23 @@ def plot_paths(paths):
     plt.pause(0.0001)
 
 # Bank parameters
-atms_number = 25         # ATM quantity
-service_centers = 2      # service centers quantity
+atms_number = 50         # ATM quantity
+service_centers = 3      # service centers quantity
 velocity = 40             # 20 / hour
-repair_time = 1         # 0.5 hour
+repair_time = 0         # 0.5 hour
 max_engi = 1              # maximum number of engineers in one service center
 
 # genetic parameters
-population_size = 100    # population size (even number!)
-generations = 500       # population's generations
+population_size = 200    # population size (even number!)
+generations = 1000       # population's generations
 mut_1_prob = 0.6         # prob of replacing together two atms in combined path
-mut_2_prob = 0.8      # prob of reversing the sublist in combined path
-mut_3_prob = 0.8       # probability of changing the length of paths for engineers
-two_opt_search = False  # better convergence, lower speed for large quantity of atms
+mut_2_prob = 0.4      # prob of reversing the sublist in combined path
+mut_3_prob = 0.2      # probability of changing the length of paths for engineers
+two_opt_search = True  # better convergence, lower speed for large quantity of atms
 
 
 # seed
-np.random.seed(1)
+np.random.seed(2)
 random.seed(1)
 plt.ion()
 engineers = []
