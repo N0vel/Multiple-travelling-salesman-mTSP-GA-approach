@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 Genetical path finding
 Finds locally best ways from L service centers with [M0, M1, ..., ML] engineers
 through atms_number ATMs and back to their service center
-Пока неучтен восьмичасовой рабочий день
 '''
 def fitness_pop(population):
     fitness_result = np.zeros(len(population))
@@ -45,6 +44,7 @@ def mutate(creat, engi):
         creat[pnt_1:pnt_2+1] = list(reversed(creat[pnt_1:pnt_2+1]))
     if random.random() < mut_3_prob:
         engi = [number-1 for number in engi if number != 0]
+        # engi = [number - 2 for number in engi if number > 1]
         while(sum(engi) != atms_number):
             engi[random.randint(0, len(engi)-1)] += 1
     return creat, engi
@@ -158,18 +158,18 @@ def plot_paths(paths):
     plt.pause(0.0001)
 
 # Bank parameters
-atms_number = 50         # ATM quantity
-service_centers = 3      # service centers quantity
+atms_number = 25         # ATM quantity
+service_centers = 3     # service centers quantity
 velocity = 40             # 20 / hour
 repair_time = 0         # 0.5 hour
 max_engi = 1              # maximum number of engineers in one service center
 
 # genetic parameters
-population_size = 200    # population size (even number!)
+population_size = 500    # population size (even number!)
 generations = 1000       # population's generations
-mut_1_prob = 0.6         # prob of replacing together two atms in combined path
-mut_2_prob = 0.4      # prob of reversing the sublist in combined path
-mut_3_prob = 0.2      # probability of changing the length of paths for engineers
+mut_1_prob = 0.4         # prob of replacing together two atms in combined path
+mut_2_prob = 0.6      # prob of reversing the sublist in combined path
+mut_3_prob = 0.8     # probability of changing the length of paths for engineers
 two_opt_search = False  # better convergence, lower speed for large quantity of atms
 
 
@@ -218,6 +218,7 @@ best_selection_prob = birth_prob(fitness_result)
 selection_prob = best_selection_prob
 better_generation = True
 new_population = population.copy()
+plot_paths(population[np.argmin(fitness_result)])
 for i in range(generations):
     if better_generation:
         new_population = crossover_mutation(new_population, selection_prob)
