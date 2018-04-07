@@ -92,6 +92,7 @@ def crossover_mutation(population, birth_prob):
         parent_1 = []
         parent_2 = []
         for j in range(len(engi_1)):
+            print('hey')
             parent_1 += population[pair[0]][j]
         for j in range(len(engi_2)):
             parent_2 += population[pair[1]][j]
@@ -160,9 +161,9 @@ def plot_paths(paths):
 # Bank parameters
 atms_number = 25         # ATM quantity
 service_centers = 3     # service centers quantity
-velocity = 100             # 20 / hour
+velocity = 100             # 100 / hour
 repair_time = 0         # 0.5 hour
-max_engi = 1              # maximum number of engineers in one service center
+max_engi = 3              # maximum number of engineers in one service center
 
 # genetic parameters
 population_size = 500    # population size (even number!)
