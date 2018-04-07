@@ -160,7 +160,7 @@ def plot_paths(paths):
 # Bank parameters
 atms_number = 25         # ATM quantity
 service_centers = 3     # service centers quantity
-velocity = 40             # 20 / hour
+velocity = 100             # 20 / hour
 repair_time = 0         # 0.5 hour
 max_engi = 1              # maximum number of engineers in one service center
 
@@ -216,27 +216,20 @@ best_mean_creature_result = np.mean(fitness_result)
 best_creature_result = np.min(fitness_result)
 best_selection_prob = birth_prob(fitness_result)
 selection_prob = best_selection_prob
-better_generation = True
 new_population = population.copy()
 plot_paths(population[np.argmin(fitness_result)])
 for i in range(generations):
-    if better_generation:
-        new_population = crossover_mutation(new_population, selection_prob)
-    else:
-        new_population = crossover_mutation(population, best_selection_prob)
+    new_population = crossover_mutation(population, selection_prob)
     fitness_result = fitness_pop(new_population)
     mean_creature_result = np.mean(fitness_result)
+    if np.min(fitness_result) < best_creature_result:
+        plot_paths(population[np.argmin(fitness_result)])
+        best_creature_result = np.min(fitness_result)
     if mean_creature_result < best_mean_creature_result:
-        better_generation = True
-        if np.min(fitness_result) < best_creature_result:
-            plot_paths(population[np.argmin(fitness_result)])
-            best_creature_result = np.min(fitness_result)
         best_mean_creature_result = mean_creature_result
         best_selection_prob = birth_prob(fitness_result)
         selection_prob = best_selection_prob
         population = new_population.copy()
-    else:
-        better_generation = False
     print('Mean population time: {0} Best time: {1}'.format(best_mean_creature_result, best_creature_result))
 plt.ioff()
 plt.show()
