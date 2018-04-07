@@ -92,7 +92,6 @@ def crossover_mutation(population, birth_prob):
         parent_1 = []
         parent_2 = []
         for j in range(len(engi_1)):
-            print('hey')
             parent_1 += population[pair[0]][j]
         for j in range(len(engi_2)):
             parent_2 += population[pair[1]][j]
