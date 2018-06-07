@@ -3,4 +3,4 @@ Solution to mTSP using genetic algorithms. To create it I've used this article: 
 
 This code was created in zeitnot, but then it became unneeded, so don't expect pretty object-oriented programming, comments and optimally written program logic.
 
-Though I like implemented on the fly plotting of the current best set of paths, it bewitches me in the same way as a reducing loss during training of neural networks.
+Though I like the implemented on the fly plotting of the current best set of paths, it bewitches me in the same way as a reducing loss during training of neural networks.
