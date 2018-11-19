@@ -63,21 +63,27 @@ def two_opt(creature):
             mat_path = mat_path * dist
             sum_dist[j] = (np.sum(mat_path) + dist[engineers[j], path[-1]]) / velocity + repair_time * len(path)
     for u in range(len(creature)):
-        for x in range(len(creature[u])):
-            for y in range(x+1, len(creature[u])):
-                path = creature[u].copy()
-                if len(path) != 0:
-                    path[x], path[y] = path[y], path[x]
-                    mat_path = np.zeros((dist.shape[0], dist.shape[1]))
-                    for v in range(len(path)):
-                        if v == 0:
-                            mat_path[engineers[u], path[v]] = 1
-                        else:
-                            mat_path[path[v - 1] + service_centers, path[v]] = 1
-                    mat_path = mat_path * dist
-                    sum_dist_path = (np.sum(mat_path) + dist[engineers[j], path[-1]]) / velocity + repair_time * len(path)
-                    if sum_dist_path < sum_dist[u]:
-                        creature[u] = path.copy()
+        best_path = creature[u].copy()
+        while True:
+            previous_best_path = best_path.copy()
+            for x in range(len(creature[u])-1):
+                for y in range(x + 1, len(creature[u])):
+                    path = best_path.copy()
+                    if len(path) != 0:
+                        path = path[:x] + list(reversed(path[x:y])) + path[y:]      # 2-opt swap
+                        mat_path = np.zeros((dist.shape[0], dist.shape[1]))
+                        for v in range(len(path)):
+                            if v == 0:
+                                mat_path[engineers[u], path[v]] = 1
+                            else:
+                                mat_path[path[v - 1] + service_centers, path[v]] = 1
+                        mat_path = mat_path * dist
+                        sum_dist_path = (np.sum(mat_path) + dist[engineers[u], path[-1]]) / velocity + repair_time * len(path)
+                        if sum_dist_path < sum_dist[u]:
+                            best_path = path.copy()
+                            creature[u] = path.copy()
+            if previous_best_path == best_path:
+                break
     return creature
 
 def crossover_mutation(population, birth_prob):
@@ -158,14 +164,14 @@ def plot_paths(paths):
     plt.pause(0.0001)
 
 # Bank parameters
-atms_number = 25         # ATM quantity
+atms_number = 50         # ATM quantity
 service_centers = 3     # service centers quantity
 velocity = 100             # 100 / hour
 repair_time = 0         # 0.5 hour
 max_engi = 3              # maximum number of engineers in one service center
 
 # genetic parameters
-population_size = 500    # population size (even number!)
+population_size = 50    # population size (even number!)
 generations = 1000       # population's generations
 mut_1_prob = 0.4         # prob of replacing together two atms in combined path
 mut_2_prob = 0.6      # prob of reversing the sublist in combined path
